@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp & Social Automation — SCHELLES AI VENTURE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Syne:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #050508; color: #e8e6e1;
+            font-family: 'Inter', sans-serif; font-weight: 400;
+            line-height: 1.7; overflow-x: hidden;
+        }
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1.2rem 3rem;
+            background: rgba(5,5,8,.82); backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .navbar img { height: 40px; filter: drop-shadow(0 0 14px rgba(0,212,170,.4)) brightness(1.6); }
+        .navbar a { text-decoration: none; }
+        .back-link {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #00d4aa; font-size: .95rem; font-weight: 500; transition: color .3s;
+        }
+        .back-link:hover { color: #7c5cfc; }
+        .hero {
+            min-height: 72vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
+            padding: 10rem 2rem 4rem; position: relative;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: -10%; left: 50%; transform: translateX(-50%);
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0,212,170,.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-icon { margin-bottom: 2rem; }
+        .hero-icon svg { width: 72px; height: 72px; }
+        .hero h1 {
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+            font-weight: 800; line-height: 1.15;
+            background: linear-gradient(135deg, #00d4aa 0%, #7c5cfc 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .hero .subtitle {
+            margin-top: 1.2rem; font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: rgba(232,230,225,.55); max-width: 620px;
+        }
+        section { padding: 5rem 2rem; max-width: 960px; margin: 0 auto; }
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .8rem; text-transform: uppercase; letter-spacing: 3px;
+            color: #00d4aa; margin-bottom: .6rem;
+        }
+        .section-title {
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; margin-bottom: 1.6rem;
+        }
+        .vision p { font-size: 1.08rem; color: rgba(232,230,225,.78); max-width: 740px; line-height: 1.85; }
+        .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+        .step-card {
+            background: rgba(14,14,22,.65); border: 1px solid rgba(255,255,255,.06);
+            border-radius: 16px; padding: 2rem 1.6rem;
+            transition: transform .35s, border-color .35s;
+        }
+        .step-card:hover { transform: translateY(-4px); border-color: rgba(0,212,170,.25); }
+        .step-num {
+            font-family: 'Unbounded', sans-serif; font-size: 1.6rem;
+            font-weight: 800; color: #7c5cfc; margin-bottom: .6rem;
+        }
+        .step-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 600; margin-bottom: .5rem; }
+        .step-card p { font-size: .9rem; color: rgba(232,230,225,.55); }
+        .pills { display: flex; flex-wrap: wrap; gap: .65rem; }
+        .pill {
+            padding: .45rem 1.1rem; border-radius: 999px;
+            font-family: 'JetBrains Mono', monospace; font-size: .82rem;
+            background: rgba(124,92,252,.1); border: 1px solid rgba(124,92,252,.25);
+            color: #c4b5fd; transition: background .3s, border-color .3s;
+        }
+        .pill:hover { background: rgba(124,92,252,.22); border-color: #7c5cfc; }
+        .deliverables { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+        .deliverables li {
+            padding: 1rem 1.3rem; border-radius: 12px;
+            background: rgba(14,14,22,.45); border: 1px solid rgba(255,255,255,.04);
+            font-size: .95rem; color: rgba(232,230,225,.72);
+            display: flex; align-items: flex-start; gap: .7rem;
+        }
+        .deliverables li::before {
+            content: ''; flex-shrink: 0; width: 8px; height: 8px;
+            margin-top: .55rem; border-radius: 50%; background: #00d4aa;
+        }
+        .cta-section { text-align: center; padding: 5rem 2rem 6rem; }
+        .cta-section h2 {
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 700; margin-bottom: 1.5rem;
+        }
+        .cta-btn {
+            display: inline-block; padding: .95rem 2.6rem;
+            font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 600;
+            color: #050508; background: linear-gradient(135deg, #00d4aa, #7c5cfc);
+            border: none; border-radius: 999px; text-decoration: none;
+            transition: transform .3s, box-shadow .3s;
+        }
+        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,212,170,.3); }
+        footer {
+            text-align: center; padding: 2.5rem 1rem;
+            font-size: .82rem; color: rgba(232,230,225,.3);
+            border-top: 1px solid rgba(255,255,255,.04);
+        }
+        @media (max-width: 640px) {
+            .navbar { padding: 1rem 1.4rem; }
+            section { padding: 3.5rem 1.2rem; }
+            .steps { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="../index.html"><img src="../assets/logo-transparent.png" alt="SCHELLES"></a>
+        <a href="../index.html" class="back-link">&larr; Back to Home</a>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-icon">
+            <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M36 10C21.6 10 10 20.7 10 33.8C10 39.8 12.4 45.2 16.4 49.2L14 62L27.4 55.6C30 56.6 32.9 57.2 36 57.2C50.4 57.2 62 46.5 62 33.4C62 20.7 50.4 10 36 10Z" stroke="#00d4aa" stroke-width="2" fill="none"/>
+                <circle cx="28" cy="34" r="3" fill="#00d4aa" opacity=".5"/>
+                <circle cx="36" cy="34" r="3" fill="#7c5cfc" opacity=".5"/>
+                <circle cx="44" cy="34" r="3" fill="#00d4aa" opacity=".5"/>
+                <path d="M24 44L20 52L28 48" stroke="#7c5cfc" stroke-width="1.5" opacity=".4" fill="none"/>
+            </svg>
+        </div>
+        <h1>WhatsApp & Social Automation</h1>
+        <p class="subtitle">Meet your customers where they already are — on WhatsApp, Instagram, and beyond.</p>
+    </header>
+
+    <section class="vision">
+        <p class="section-label">The Vision</p>
+        <h2 class="section-title">Why We Built This</h2>
+        <p>Your customers live on WhatsApp and Instagram. They send messages at midnight, expect instant replies, and abandon carts when they have to switch to another app. Why make them come to you when your business can go to them — automatically? We build intelligent bots that handle sales funnels, deliver invoices, confirm orders, and nurture leads entirely within the messaging apps people already use every day.</p>
+    </section>
+
+    <section>
+        <p class="section-label">Our Process</p>
+        <h2 class="section-title">How We Build It</h2>
+        <div class="steps">
+            <div class="step-card">
+                <div class="step-num">01</div>
+                <h3>Conversation Mapping</h3>
+                <p>We study your sales funnel and customer support patterns to design conversation trees that guide users from inquiry to purchase without friction.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">02</div>
+                <h3>Bot Development</h3>
+                <p>We build context-aware bots using the official WhatsApp Business API and Meta Graph API — no shady workarounds that get your number banned.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">03</div>
+                <h3>ERP & CRM Sync</h3>
+                <p>Every message, order, and lead is automatically synced to your backend systems — inventory updates, invoice generation, and CRM tagging happen in real time.</p>
+            </div>
+        </div>
+    </section>
+    <section>
+        <p class="section-label">Deliverables</p>
+        <h2 class="section-title">What You Get</h2>
+        <ul class="deliverables">
+            <li>WhatsApp chatbot with product catalog browsing, cart management, and order placement</li>
+            <li>Automated invoice and payment receipt delivery via WhatsApp messages</li>
+            <li>Instagram DM automation for lead capture, FAQ responses, and story reply funnels</li>
+            <li>Broadcast messaging for promotions, re-engagement campaigns, and flash sales</li>
+            <li>Real-time analytics dashboard showing open rates, response times, and conversion funnels</li>
+        </ul>
+    </section>
+
+    <section class="cta-section">
+        <h2>Ready to turn conversations into conversions?</h2>
+        <a href="../index.html#contact" class="cta-btn">Get Started</a>
+    </section>
+
+    <footer>&copy; 2026 SCHELLES AI VENTURE LLP</footer>
+</body>
+</html>

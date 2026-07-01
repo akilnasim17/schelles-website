@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document AI & OCR — SCHELLES AI VENTURE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Syne:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #050508; color: #e8e6e1;
+            font-family: 'Inter', sans-serif; font-weight: 400;
+            line-height: 1.7; overflow-x: hidden;
+        }
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1.2rem 3rem;
+            background: rgba(5,5,8,.82); backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .navbar img { height: 40px; filter: drop-shadow(0 0 14px rgba(0,212,170,.4)) brightness(1.6); }
+        .navbar a { text-decoration: none; }
+        .back-link {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #00d4aa; font-size: .95rem; font-weight: 500; transition: color .3s;
+        }
+        .back-link:hover { color: #7c5cfc; }
+        .hero {
+            min-height: 72vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
+            padding: 10rem 2rem 4rem; position: relative;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: -10%; left: 50%; transform: translateX(-50%);
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0,212,170,.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-icon { margin-bottom: 2rem; }
+        .hero-icon svg { width: 72px; height: 72px; }
+        .hero h1 {
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+            font-weight: 800; line-height: 1.15;
+            background: linear-gradient(135deg, #00d4aa 0%, #7c5cfc 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .hero .subtitle {
+            margin-top: 1.2rem; font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: rgba(232,230,225,.55); max-width: 620px;
+        }
+        section { padding: 5rem 2rem; max-width: 960px; margin: 0 auto; }
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .8rem; text-transform: uppercase; letter-spacing: 3px;
+            color: #00d4aa; margin-bottom: .6rem;
+        }
+        .section-title {
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; margin-bottom: 1.6rem;
+        }
+        .vision p { font-size: 1.08rem; color: rgba(232,230,225,.78); max-width: 740px; line-height: 1.85; }
+        .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+        .step-card {
+            background: rgba(14,14,22,.65); border: 1px solid rgba(255,255,255,.06);
+            border-radius: 16px; padding: 2rem 1.6rem;
+            transition: transform .35s, border-color .35s;
+        }
+        .step-card:hover { transform: translateY(-4px); border-color: rgba(0,212,170,.25); }
+        .step-num {
+            font-family: 'Unbounded', sans-serif; font-size: 1.6rem;
+            font-weight: 800; color: #7c5cfc; margin-bottom: .6rem;
+        }
+        .step-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 600; margin-bottom: .5rem; }
+        .step-card p { font-size: .9rem; color: rgba(232,230,225,.55); }
+        .pills { display: flex; flex-wrap: wrap; gap: .65rem; }
+        .pill {
+            padding: .45rem 1.1rem; border-radius: 999px;
+            font-family: 'JetBrains Mono', monospace; font-size: .82rem;
+            background: rgba(124,92,252,.1); border: 1px solid rgba(124,92,252,.25);
+            color: #c4b5fd; transition: background .3s, border-color .3s;
+        }
+        .pill:hover { background: rgba(124,92,252,.22); border-color: #7c5cfc; }
+        .deliverables { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+        .deliverables li {
+            padding: 1rem 1.3rem; border-radius: 12px;
+            background: rgba(14,14,22,.45); border: 1px solid rgba(255,255,255,.04);
+            font-size: .95rem; color: rgba(232,230,225,.72);
+            display: flex; align-items: flex-start; gap: .7rem;
+        }
+        .deliverables li::before {
+            content: ''; flex-shrink: 0; width: 8px; height: 8px;
+            margin-top: .55rem; border-radius: 50%; background: #00d4aa;
+        }
+        .cta-section { text-align: center; padding: 5rem 2rem 6rem; }
+        .cta-section h2 {
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 700; margin-bottom: 1.5rem;
+        }
+        .cta-btn {
+            display: inline-block; padding: .95rem 2.6rem;
+            font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 600;
+            color: #050508; background: linear-gradient(135deg, #00d4aa, #7c5cfc);
+            border: none; border-radius: 999px; text-decoration: none;
+            transition: transform .3s, box-shadow .3s;
+        }
+        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,212,170,.3); }
+        footer {
+            text-align: center; padding: 2.5rem 1rem;
+            font-size: .82rem; color: rgba(232,230,225,.3);
+            border-top: 1px solid rgba(255,255,255,.04);
+        }
+        @media (max-width: 640px) {
+            .navbar { padding: 1rem 1.4rem; }
+            section { padding: 3.5rem 1.2rem; }
+            .steps { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="../index.html"><img src="../assets/logo-transparent.png" alt="SCHELLES"></a>
+        <a href="../index.html" class="back-link">&larr; Back to Home</a>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-icon">
+            <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="14" y="8" width="36" height="48" rx="3" stroke="#7c5cfc" stroke-width="2" fill="none"/>
+                <path d="M38 8V20H50" stroke="#7c5cfc" stroke-width="2" fill="none"/>
+                <line x1="22" y1="28" x2="42" y2="28" stroke="#00d4aa" stroke-width="1.5" opacity=".6"/>
+                <line x1="22" y1="34" x2="38" y2="34" stroke="#00d4aa" stroke-width="1.5" opacity=".4"/>
+                <line x1="22" y1="40" x2="40" y2="40" stroke="#00d4aa" stroke-width="1.5" opacity=".3"/>
+                <circle cx="52" cy="48" r="12" stroke="#00d4aa" stroke-width="2" fill="rgba(5,5,8,.9)"/>
+                <path d="M48 48L51 51L56 45" stroke="#00d4aa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <h1>Document AI & OCR</h1>
+        <p class="subtitle">Intelligent extraction that reads, understands, and enters document data for you.</p>
+    </header>
+
+    <section class="vision">
+        <p class="section-label">The Vision</p>
+        <h2 class="section-title">Why We Built This</h2>
+        <p>Manually entering invoice data is a billion-dollar waste across industries. Accounting teams spend hours re-typing numbers from PDFs into ERP systems, introducing errors along the way. We built AI that reads invoices, receipts, medical documents, and government forms — then extracts structured data with higher accuracy than human data entry. The result: finance teams reclaim hundreds of hours per month, and error rates drop to near zero.</p>
+    </section>
+
+    <section>
+        <p class="section-label">Our Process</p>
+        <h2 class="section-title">How We Build It</h2>
+        <div class="steps">
+            <div class="step-card">
+                <div class="step-num">01</div>
+                <h3>Document Profiling</h3>
+                <p>We collect samples of every document type you process — invoices, purchase orders, prescriptions, GST returns — and map the fields that need extraction.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">02</div>
+                <h3>Model Training</h3>
+                <p>We train custom OCR and NLP models on your specific document layouts, handling everything from clean digital PDFs to low-quality scans and handwritten notes.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">03</div>
+                <h3>Validation Pipeline</h3>
+                <p>Extracted data passes through rule-based validation — checking GST number formats, date ranges, and arithmetic totals — before entering your system.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">04</div>
+                <h3>ERP Integration</h3>
+                <p>Validated data flows directly into your accounting or ERP system through APIs, eliminating the copy-paste workflow entirely.</p>
+            </div>
+        </div>
+    </section>
+    <section>
+        <p class="section-label">Deliverables</p>
+        <h2 class="section-title">What You Get</h2>
+        <ul class="deliverables">
+            <li>Automated invoice extraction with line-item detail, tax breakdowns, and vendor identification</li>
+            <li>PDF-to-ERP pipeline that processes hundreds of documents per hour without human intervention</li>
+            <li>GST-specific extraction for Indian businesses — GSTIN, HSN codes, IGST/CGST/SGST splits</li>
+            <li>Receipt and expense report processing for employee reimbursement workflows</li>
+            <li>Medical document parsing for prescriptions, lab reports, and discharge summaries</li>
+            <li>Confidence scoring and exception queue for documents that need human review</li>
+        </ul>
+    </section>
+
+    <section class="cta-section">
+        <h2>Ready to stop typing and start automating?</h2>
+        <a href="../index.html#contact" class="cta-btn">Get Started</a>
+    </section>
+
+    <footer>&copy; 2026 SCHELLES AI VENTURE LLP</footer>
+</body>
+</html>
